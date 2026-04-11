@@ -1,0 +1,35 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: api-prod
+    ports:
+      - '${API_PORT:-3000}:3000' # API server
+    environment:
+      NODE_ENV: production
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: '${PROD_MEMORY_LIMIT:-2G}'
+          cpus: '${PROD_CPU_LIMIT:-1.0}'
+        reservations:
+          memory: '${PROD_MEMORY_RESERVATION:-512M}'
+          cpus: '${PROD_CPU_RESERVATION:-0.25}'
+
+  db:
+    image: mariadb
+    restart: always
+    user: root
+    secrets:
+      - db-password
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      - MARIADB_ROOT_PASSWORD_FILE=${PROD_MARIADB_ROOT_PASSWORD_FILE}
+      - MARIADB_DATABASE=${PROD_MARIADB_DATABASE}
