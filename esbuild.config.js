@@ -6,7 +6,6 @@ const config = {
   platform: 'node',
   format: 'esm',
   outfile: 'dist/server.js',
-  external: ['pg-native', 'sqlite3'],
   minify: process.env.NODE_ENV === 'production',
   sourcemap: true,
   target: 'node22',
@@ -18,14 +17,15 @@ const config = {
   conditions: ['import', 'module', 'default'],
 };
 
-build(config)
-  .then((result) => {
-    console.log('Build completed successfully');
-    if (result.metafile) {
-      console.log('Output files:', Object.keys(result.metafile.outputs));
-    }
-  })
-  .catch((error) => {
-    console.error('Build failed:', error);
-    process.exit(1);
-  });
+try {
+  const result = await build(config);
+
+  console.log('Build completed successfully');
+
+  if (result.metafile) {
+    console.log('Output files:', Object.keys(result.metafile.outputs));
+  }
+} catch (error) {
+  console.error('Build failed:', error);
+  process.exit(1);
+}

@@ -8,7 +8,6 @@
   - [Build image de prod de la web API](#build-image-de-prod-de-la-web-api)
   - [Progression typique](#progression-typique)
   - [Pipeline CI/CD](#pipeline-cicd)
-    - [En amont](#en-amont)
     - [CI/CD](#cicd)
       - [CI](#ci)
       - [CD](#cd)
@@ -63,11 +62,17 @@ docker build --target production --tag api .
 
 ## Progression typique
 
+1. On [lance le projet en mode dev (hot reload via watch)](#lancer-le-projet-env-de-dev)
+2. On développe (modifie sources)
+3. On commit, déclenche hook *pre-commit* (via *husky*) :
+   1. Tests
+   2. Linter
+   3. Analyse statique via eslint
+Si tout passe, le commit est validé en local.
+4. Publie le commit sur le dépôt distant.
+5. Déclenchement de la pipeline CI/CD.
+
 ## Pipeline CI/CD
-
-### En amont
-
-- Git hook pre-commit : linter
 
 ### CI/CD
 
@@ -79,7 +84,8 @@ docker build --target production --tag api .
 
 ## Améliorations
 
-- Créer et utiliser un utilisateur mysql différent de root dédié à l'application
+- Créer et utiliser un utilisateur mysql différent de `root` dédié à l'application ;
+- Améliorer et personnaliser les règles de l'analyse statique et fixer un niveau d'exigence adapté ;
 
 ## Liens utiles
 
@@ -89,4 +95,6 @@ docker build --target production --tag api .
 ### Tooling
 
 - [Testcontainers](https://testcontainers.com/), lib open source fournissant une API pour instancier des dépendances stateful (ex base de données) pour les tests d'intégration
-- [Husky](https://typicode.github.io/husky/)
+- [Husky](https://typicode.github.io/husky/), gestion des hooks *pre-commit*
+- [eslint](https://eslint.org/), linter et analyse statique des sources js
+- [sonarjs](https://www.npmjs.com/package/eslint-plugin-sonarjs), plugin d'eslint pour la détection de *code smell*

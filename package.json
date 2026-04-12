@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "A simple RESTful API",
   "main": "kernel.js",
+  "type": "module",
   "scripts": {
     "test": "npm run test:unit && npm run test:int",
     "test:unit": "jest tests/unit",
-    "test:int": "jest tests --testPathPattern=integration",
+    "test:int": "jest tests --testPathPatterns=integration",
     "dev": "nodemon --watch src --ext js,json --inspect=0.0.0.0:9230 src/kernel.js",
     "build": "node esbuild.config.js",
     "prepare": "husky"
@@ -19,11 +20,23 @@
     "mysql2": "^3.6.2"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.4",
     "esbuild": "^0.28.0",
+    "eslint": "^9.39.4",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-sonarjs": "^4.0.2",
+    "eslint-plugin-unicorn": "^64.0.0",
+    "globals": "^17.5.0",
     "husky": "^9.1.7",
     "jest": "^30.3.0",
+    "lint-staged": "^16.4.0",
     "nodemon": "^3.1.14",
     "supertest": "^7.2.2",
     "testcontainers": "^11.14.0"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix --max-warnings=0"
+    ]
   }
 }
