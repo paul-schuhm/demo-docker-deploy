@@ -71,6 +71,10 @@ ENV NODE_ENV=development \
 # Copy source files
 COPY . .
 
+# Ensure all directories have proper permissions
+RUN chown -R nodejs:nodejs /app && \
+    chmod -R 755 /app
+
 # Switch to non-root user
 USER nodejs
 

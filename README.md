@@ -12,6 +12,7 @@
     - [CI/CD](#cicd)
       - [CI](#ci)
       - [CD](#cd)
+  - [Améliorations](#améliorations)
   - [Liens utiles](#liens-utiles)
     - [Tooling](#tooling)
 
@@ -19,16 +20,16 @@
 
 - Bien séparer env (fichiers .env) []
 - Script Makefile/alias pour commande docker avec merge des fichiers compose []
-- Projet fonctionne en dev []
-- Projet fonctionne en mode prod []
+- API fonctionne en dev []
+- API fonctionne en mode prod []
 - Ajouter linter []
-- Ajouter pre-commit hook avec https://typicode.github.io/husky/ []
+- Ajouter pre-commit hook linter/analyse statique avec https://typicode.github.io/husky/ []
 - Pipeline CI/CD avec Sonarqube, docker scout et tests []
 - Décrire les différentes phases de tests (local, repo) []
 - Ajouter test unitaire démo []
 - Ajouter test d'intégration avec testcontainer []
+- Processus de déploiement en prod sur la vm sans downtime (blue/green, docker swarm rolling update) []
 - Compléter le README.md []
-- Processus de déploiement en prod sur la vm []
 
 ## Application démo
 
@@ -42,7 +43,9 @@ L'application est couverte par :
 ## Lancer le projet (env de dev)
 
 ~~~bash
-docker compose up api -d --build
+mkdir db-data
+cp .env.dist .env
+docker compose -f compose.yaml -f compose.dev.yaml up -d --build
 ~~~
 
 ## Lancer le projet (env de prod)
@@ -54,7 +57,7 @@ docker compose -f compose.yaml -f compose.prod.yaml up api -d --build
 ## Build image de prod de la web API
 
 ~~~bash
-docker build --target production --tag docker-nodejs-sample .
+docker build --target production --tag api .
 ~~~
 
 ## Progression typique
@@ -72,6 +75,10 @@ docker build --target production --tag docker-nodejs-sample .
 #### CI
 
 #### CD
+
+## Améliorations
+
+- Créer et utiliser un utilisateur mysql différent de root dédié à l'application
 
 ## Liens utiles
 

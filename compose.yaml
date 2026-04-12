@@ -1,4 +1,4 @@
-#Compose file (dev par defaut)
+#Compose file base
 
 services:
   api:
@@ -6,53 +6,33 @@ services:
       context: .
     environment:
       NODE_ENV: ${NODE_ENV}
-    ports:
-      - '${API_PORT:-3000}:3000' # API server
-      - '${DEBUG_PORT:-9229}:9229' # Node.js debugger
     depends_on:
       db:
         condition: service_healthy
-    develop:
-      watch:
-        - action: sync
-          path: ./src
-          target: /usr/src/app
+    networks:
+      - api-network
   db:
-    image: mariadb
+    image: mysql:9.6.0
     restart: always
-    user: root
     secrets:
-      - db-password
-    volumes:
-      - db-data:/var/lib/mysql
+      - mysql-root
+    labels:
+      - "autoheal=true"    
     environment:
-      - MARIADB_ROOT_PASSWORD_FILE=${PROD_MARIADB_ROOT_PASSWORD_FILE}
-      - MARIADB_DATABASE=${PROD_MARIADB_DATABASE}
-    expose:
-      - 3306
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql-root
+    volumes:
+      - ./init/:/docker-entrypoint-initdb.d/
+      - ./db-data:/var/lib/mysql
     healthcheck:
-      test:
-        [
-          "CMD",
-          "/usr/local/bin/healthcheck.sh",
-          "--su-mysql",
-          "--connect",
-          "--innodb_initialized",
-        ]
-      interval: 10s
+      test: ["CMD", "mysqladmin", "ping", "--silent"]
+      interval: 5s
       timeout: 5s
       retries: 5
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
-
 volumes:
   db-data:
 secrets:
-  db-password:
+  mysql-root:
     file: db/password.txt
 
 networks:

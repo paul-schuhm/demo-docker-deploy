@@ -1,5 +1,5 @@
 {
-  "name": "myapp",
+  "name": "api",
   "version": "1.0.0",
   "description": "A simple RESTful API",
   "main": "kernel.js",
@@ -13,8 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.2.1",
-    "pg": "^8.20.0"
+    "express": "^5.2.1"
   },
   "devDependencies": {
     "esbuild": "^0.28.0",

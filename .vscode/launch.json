@@ -2,12 +2,17 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Attach Node",
+      "name": "Attach to Docker Container",
       "type": "node",
       "request": "attach",
-      "address": "localhost",
       "port": 9229,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/app",
+      "protocol": "inspector",
       "restart": true,
+      "sourceMaps": true,
+      "skipFiles": ["<node_internals>/**"]
     }
   ]
 }
