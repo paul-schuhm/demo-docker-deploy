@@ -1,10 +1,9 @@
-const express = require('express');
+const express = require("express");
 
 function createUserRouter(service) {
-
   const router = express.Router();
-  
-  router.get('/users', async (req, res) => {
+
+  router.get("/users", async (req, res) => {
     const users = await service.users();
     res.json(users);
   });
@@ -12,4 +11,4 @@ function createUserRouter(service) {
   return router;
 }
 
-module.exports = { createUserRouter };
+module.exports = {createUserRouter};

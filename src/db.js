@@ -26,6 +26,4 @@ async function connexion() {
   return pool;
 }
 
-console.log('test')
-
 module.exports = { connexion };
