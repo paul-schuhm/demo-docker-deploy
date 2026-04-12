@@ -1,7 +1,8 @@
 /**
  * Export et test de la connexion à la base de données MySQL
  */
-const fs = require("fs").promises;
+const fs = require("node:fs").promises;
+
 const mysql = require("mysql2/promise");
 
 let pool = null;
@@ -25,15 +26,6 @@ async function connexion() {
   return pool;
 }
 
-/**
- * Une simple fonction test de la connexion à MySQL
- */
-async function testConnexion() {
-  const conn = await connexion();
-  let [res] = await conn.execute("SELECT ? + ? AS solution", [1, 1]);
-  console.log(res);
-}
-
-//testConnexion();
+console.log('test')
 
 module.exports = { connexion };

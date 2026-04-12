@@ -90,10 +90,10 @@ export default [
       /*
        * === SONAR (code smells / complexité) ===
        */
-      // "sonarjs/no-identical-functions": "error",
-      // "sonarjs/no-redundant-boolean": "error",
-      // "sonarjs/no-implicit-dependencies": "error",
-      // "sonarjs/cognitive-complexity": "error",
+      "sonarjs/no-identical-functions": "error",
+      "sonarjs/no-redundant-boolean": "error",
+      "sonarjs/no-implicit-dependencies": "error",
+      "sonarjs/cognitive-complexity": "error",
 
       /*
        * === UNICORN (modern JS / Node) ===
