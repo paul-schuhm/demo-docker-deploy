@@ -8,17 +8,19 @@
     "test:unit": "jest tests/unit",
     "test:int": "jest tests --testPathPattern=integration",
     "dev": "nodemon --watch src --ext js,json --inspect=0.0.0.0:9230 src/kernel.js",
-    "build": "node esbuild.config.js"
+    "build": "node esbuild.config.js",
+    "prepare": "husky"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "express": "^5.2.1",
-    "mysql2": "^3.6.2",
-    "dotenv": "^16.4.5"
+    "mysql2": "^3.6.2"
   },
   "devDependencies": {
     "esbuild": "^0.28.0",
+    "husky": "^9.1.7",
     "jest": "^30.3.0",
     "nodemon": "^3.1.14",
     "supertest": "^7.2.2",
