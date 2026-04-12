@@ -13,12 +13,13 @@ module.exports = [
       ecmaVersion: "latest",
       sourceType: "commonjs",
       globals: {
-        ...globals.node
-      }
+        ...globals.node,
+        ...globals.jest,
+      },
     },
 
     plugins: {
-      sonarjs
+      sonarjs,
     },
 
     rules: {
@@ -28,8 +29,8 @@ module.exports = [
       "no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
       "no-undef": "error",
       "no-console": "warn",
-      "eqeqeq": "error",
-      "curly": "error",
+      eqeqeq: "error",
+      curly: "error",
 
       /*
        * === NODE FRIENDLY ===
@@ -41,7 +42,7 @@ module.exports = [
        */
       "sonarjs/cognitive-complexity": ["warn", 5],
       "sonarjs/no-identical-functions": "error",
-      "sonarjs/no-redundant-boolean": "error"
-    }
-  }
+      "sonarjs/no-redundant-boolean": "error",
+    },
+  },
 ];
