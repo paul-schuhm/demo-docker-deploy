@@ -18,15 +18,14 @@
 ## Checklist
 
 - Bien séparer env (fichiers .env) [x]
-- Script Makefile/alias pour commande docker avec merge des fichiers compose []
 - API fonctionne en dev [x]
 - API fonctionne en mode prod [x]
-- Ajouter linter []
-- Ajouter pre-commit hook linter/analyse statique avec https://typicode.github.io/husky/ []
+- Ajouter linter [x]
+- Ajouter pre-commit hook linter/analyse statique avec https://typicode.github.io/husky/ [x]
+- Ajouter test unitaire démo [x]
+- Ajouter test d'intégration avec testcontainer [x]
 - Pipeline CI/CD avec Sonarqube, docker scout et tests []
 - Décrire les différentes phases de tests (local, repo) []
-- Ajouter test unitaire démo []
-- Ajouter test d'intégration avec testcontainer []
 - Processus de déploiement en prod sur la vm sans downtime (blue/green, docker swarm rolling update) []
 - Compléter le README.md []
 
@@ -59,6 +58,8 @@ docker compose -f compose.yaml -f compose.prod.yaml --env-file .env.prod up -d -
 ~~~bash
 docker build --target production --tag api .
 ~~~
+
+> Ne pas hésiter à se créer un `Makefile` ou des `alias` pour faciliter le lancement de ces commandes !
 
 ## Progression typique
 
