@@ -18,10 +18,10 @@
 
 ## Checklist
 
-- Bien séparer env (fichiers .env) []
+- Bien séparer env (fichiers .env) [x]
 - Script Makefile/alias pour commande docker avec merge des fichiers compose []
-- API fonctionne en dev []
-- API fonctionne en mode prod []
+- API fonctionne en dev [x]
+- API fonctionne en mode prod [x]
 - Ajouter linter []
 - Ajouter pre-commit hook linter/analyse statique avec https://typicode.github.io/husky/ []
 - Pipeline CI/CD avec Sonarqube, docker scout et tests []
@@ -33,7 +33,7 @@
 
 ## Application démo
 
-Une simple web API en Node.js/Express.js couplé à une base de données PostgreSQL. L'application expose une ressource `/v1/concerts`
+Une simple web API en Node.js/Express.js couplé à une base de données relationnelle. L'application expose une ressource `/v1/users`.
 
 L'application est couverte par :
 
@@ -45,13 +45,14 @@ L'application est couverte par :
 ~~~bash
 mkdir db-data
 cp .env.dist .env
-docker compose -f compose.yaml -f compose.dev.yaml up -d --build
+docker compose -f compose.yaml -f compose.dev.yaml build api
+docker compose -f compose.yaml -f compose.dev.yaml up --watch
 ~~~
 
 ## Lancer le projet (env de prod)
 
 ~~~bash
-docker compose -f compose.yaml -f compose.prod.yaml up api -d --build
+docker compose -f compose.yaml -f compose.prod.yaml --env-file .env.prod up -d --build
 ~~~
 
 ## Build image de prod de la web API

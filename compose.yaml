@@ -5,7 +5,11 @@ services:
     build:
       context: .
     environment:
-      NODE_ENV: ${NODE_ENV}
+      - NODE_ENV=${NODE_ENV}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD_FILE=${MYSQL_ROOT_PASSWORD_FILE}   
+    secrets:
+      - mysql-root
     depends_on:
       db:
         condition: service_healthy

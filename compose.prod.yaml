@@ -21,17 +21,5 @@ services:
         reservations:
           memory: '${MEMORY_RESERVATION:-512M}'
           cpus: '${CPU_RESERVATION:-0.25}'
-
   db:
-    image: mysql:9.6.0
     restart: always
-    user: root
-    secrets:
-      - db-password
-    volumes:
-      - db-data:/var/lib/mysql
-    environment:
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=password
-      - MYSQL_ROOT_PASSWORD_FILE=${MYSQL_ROOT_PASSWORD_FILE}

@@ -4,11 +4,6 @@ services:
       context: .
       target: development
     container_name: api-dev
-    environment:
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_ROOT_PASSWORD_FILE=${MYSQL_ROOT_PASSWORD_FILE}   
-    secrets:
-      - mysql-root
     ports:
       - '${API_PORT:-3000}:3000' # API server
       - '${DEBUG_PORT:-9229}:9229' # Node.js debugger
