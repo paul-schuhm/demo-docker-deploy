@@ -39,6 +39,7 @@ export default [
        * === ERREURS CRITIQUES (bloquantes) ===
        */
       "no-undef": "error",
+      "no-console": "error",
       "no-unreachable": "error",
       "no-constant-condition": "error",
       "no-debugger": "error",
@@ -68,12 +69,6 @@ export default [
           varsIgnorePattern: "^_",
         },
       ],
-
-      /*
-       * === NODE / BACKEND ===
-       */
-      "no-process-exit": "off",
-      "no-console": "off",
 
       /*
        * === IMPORTS ===
