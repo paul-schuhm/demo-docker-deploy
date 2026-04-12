@@ -1,43 +1,27 @@
-const express = require('express')
-const app = express()
-const port = 3000
+const express = require("express");
+const { createUserRouter } = require("./resources/users");
+const { createUserService } = require("./services/userService");
+const UserRepository = require("./repositories/mysqlUserRepository");
 
-app.get('/', (req, res) => {
-  res.send('salut !')
-})
+async function run() {
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  const app = express();
+  app.use(express.json());
 
+  const repository = new UserRepository();
+  const service = createUserService(repository);
+  app.use("/v1/", createUserRouter(service));
 
+  const PORT = process.env.PORT || 3000;
 
-// const express = require("express");
-// const { createConcertRouter } = require("./resources/concerts");
-// const { createConcertService } = require("./services/concertService");
-// const PgConcertRepository = require("./repositories/pgConcertRepository");
-// const { createPoolFromEnv } = require("./db");
+  app.listen(PORT, () => {
+    console.log(`web API running on http://localhost:${PORT}`);
+  });
+}
 
-// async function run() {
-//   const pool = createPoolFromEnv();
-
-//   const repository = new PgConcertRepository(pool);
-//   const service = createConcertService(repository);
-
-//   const app = express();
-
-//   app.use(express.json());
-//   app.use("/v1/concerts", createConcertRouter(service));
-
-//   const PORT = process.env.PORT || 3000;
-//   app.listen(PORT, () => {
-//     console.log(`web API running on http://localhost:${PORT}`);
-//   });
-// }
-
-// run().catch((err) => {
-//   console.error("Failed to start server:", err);
-//   process.exit(1);
-// });
+run().catch((err) => {
+  console.error("Failed to start server:", err);
+  process.exit(1);
+});
 
 

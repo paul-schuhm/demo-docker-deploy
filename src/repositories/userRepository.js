@@ -1,7 +1,7 @@
-class ConcertRepository {
+class UserRepository {
   async findAll() {
     throw new Error('Not implemented');
   }
 }
 
-module.exports = ConcertRepository;
+module.exports = UserRepository;

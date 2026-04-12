@@ -9,6 +9,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    links:
+      - "db:database"
     networks:
       - api-network
   db:
@@ -20,7 +22,7 @@ services:
       - "autoheal=true"    
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql-root
+      - MYSQL_ROOT_PASSWORD_FILE=${MYSQL_ROOT_PASSWORD_FILE}
     volumes:
       - ./init/:/docker-entrypoint-initdb.d/
       - ./db-data:/var/lib/mysql
@@ -29,6 +31,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - api-network
 volumes:
   db-data:
 secrets:

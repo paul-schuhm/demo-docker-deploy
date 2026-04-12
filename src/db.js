@@ -1,59 +1,39 @@
-const { Pool } = require("pg");
+/**
+ * Export et test de la connexion à la base de données MySQL
+ */
+const fs = require("fs").promises;
+const mysql = require("mysql2/promise");
 
 let pool = null;
 
-/**
- * Initialise le pool avec config explicite (tests, testcontainers)
- */
-function createPool(config) {
-  if (pool) return pool;
-
-  pool = new Pool(config);
-
-  pool.on("error", (err) => {
-    console.error("Unexpected DB error", err);
-    process.exit(1);
-  });
-
-  return pool;
+async function buildDSN() {
+  return {
+    host: "database",
+    user: "root",
+    password: (
+      await fs.readFile(process.env.MYSQL_ROOT_PASSWORD_FILE, "utf8")
+    ).trim(),
+    database: process.env.MYSQL_DATABASE,
+  };
 }
 
-/**
- * Initialise depuis variables d’environnement (prod / docker)
- */
-function createPoolFromEnv() {
-  return createPool({
-    host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT || 5432),
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-  });
-}
-
-/**
- * Accès global (utilisé par les repositories)
- */
-function getPool() {
+async function connexion() {
   if (!pool) {
-    throw new Error("DB not initialized. Call createPool first.");
+    const dsn = await buildDSN();
+    pool = mysql.createPool(dsn);
   }
   return pool;
 }
 
 /**
- * Fermeture propre (tests, shutdown)
+ * Une simple fonction test de la connexion à MySQL
  */
-async function closePool() {
-  if (pool) {
-    await pool.end();
-    pool = null;
-  }
+async function testConnexion() {
+  const conn = await connexion();
+  let [res] = await conn.execute("SELECT ? + ? AS solution", [1, 1]);
+  console.log(res);
 }
 
-module.exports = {
-  createPool,
-  createPoolFromEnv,
-  getPool,
-  closePool,
-};
+//testConnexion();
+
+module.exports = { connexion };
