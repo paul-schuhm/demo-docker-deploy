@@ -40,14 +40,22 @@ L'application est couverte par :
 
 ## Lancer le projet (env de dev)
 
+1. Initialiser le projet :
+
 ~~~bash
+npm i
 mkdir db-data
 cp .env.dist .env
+~~~
+
+2. Lancer le projet avec
+
+~~~bash
 docker compose -f compose.yaml -f compose.dev.yaml build api
 docker compose -f compose.yaml -f compose.dev.yaml up --watch
 ~~~
 
-ou
+ou simplement
 
 ~~~bash
 make run-dev
