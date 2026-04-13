@@ -47,10 +47,23 @@ docker compose -f compose.yaml -f compose.dev.yaml build api
 docker compose -f compose.yaml -f compose.dev.yaml up --watch
 ~~~
 
+ou
+
+~~~bash
+make run-dev
+~~~
+
 ## Lancer le projet (env de prod)
 
 ~~~bash
+cp .env.prod.dist .env.prod
 docker compose -f compose.yaml -f compose.prod.yaml --env-file .env.prod up -d --build
+~~~
+
+ou
+
+~~~bash
+make run-prod
 ~~~
 
 ## Build image de prod de la web API
@@ -59,7 +72,13 @@ docker compose -f compose.yaml -f compose.prod.yaml --env-file .env.prod up -d -
 docker build --target production --tag api .
 ~~~
 
-> Ne pas hésiter à se créer un `Makefile` ou des `alias` pour faciliter le lancement de ces commandes !
+ou
+
+~~~bash
+make build-prod
+~~~
+
+> Ne pas hésiter à se créer un `Makefile` ou des `alias` pour faciliter le lancement de vos commandes !
 
 ## Progression typique
 
